@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "725776442176",
+    "project_id": "askchuck",
+    "storage_bucket": "askchuck.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:725776442176:android:4e1ec53ef1ded5c51a50a5",
+        "android_client_info": {
+          "package_name": "com.infinitive.ask_chuck"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "725776442176-orf3ilp22062161bifn0qi85m33tuutf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLZ5Lq0V0PJFb-_vu1j_Ydn36-8nOmO2U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "725776442176-orf3ilp22062161bifn0qi85m33tuutf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
