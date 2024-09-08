@@ -51,14 +51,9 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     Converse event,
     Emitter<ChatState> emit,
   ) async {
-    var (String? sessionId, String? userId) = (state.sessionId, state.userId);
+    var (String? sessionId) = (state.sessionId);
 
-    if (userId == null) {
-      // guest chat
-      sessionId ??= const Uuid().v6();
-    }
-
-    if (sessionId == null) return;
+    sessionId ??= const Uuid().v6();
 
     emit(state.copyWith(
       currentConversation: const AsyncLoading(),
@@ -70,7 +65,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       ConverseRequest(
         query: event.query,
         sessionId: sessionId,
-        userId: userId ?? "vishal",
+        userId: event.userId,
       ),
     );
 

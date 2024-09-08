@@ -8,8 +8,8 @@ class ChatState extends Equatable {
 
   const ChatState({
     this.currentConversation = const AsyncNull(),
-    this.sessionId = "test_pinecone_session_2",
-    // this.sessionId,
+    // this.sessionId = "test_pinecone_session_2",
+    this.sessionId,
     this.currentQuery,
     this.userId,
   });

@@ -46,3 +46,4 @@ app.*.map.json
 .fvm/
 pubspec.lock
 .fvmrc
+.env

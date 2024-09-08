@@ -1,4 +1,5 @@
 import 'package:ask_chuck/src/features/chat/application/chat_bloc/chat_bloc.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -42,6 +43,11 @@ class _ChatTextFieldState extends State<ChatTextField> {
     String query,
   ) {
     controller.clear();
-    BlocProvider.of<ChatBloc>(context).add(Converse(query: query));
+    BlocProvider.of<ChatBloc>(context).add(
+      Converse(
+        query: query,
+        userId: FirebaseAuth.instance.currentUser?.uid ?? "vishal",
+      ),
+    );
   }
 }

@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart' as env;
 
 import 'package:ask_chuck/src/router/app_routes.dart';
 import 'package:ask_chuck/src/router/router_refresh_listenable.dart';
@@ -41,12 +42,14 @@ class _AppSignInScreenState extends State<AppSignInScreen> {
                         ? null
                         : () async {
                             try {
+                              final clientId =
+                                  env.dotenv.env["GOOGLE_SIGN_IN_CLIENT_ID"];
+                              if (clientId == null) return;
                               setState(() {
                                 isSigningIn = true;
                               });
                               final account = await GoogleSignIn(
-                                clientId:
-                                    "725776442176-orf3ilp22062161bifn0qi85m33tuutf.apps.googleusercontent.com",
+                                clientId: clientId,
                                 scopes: ["email"],
                               ).signIn();
                               final auth = await account?.authentication;

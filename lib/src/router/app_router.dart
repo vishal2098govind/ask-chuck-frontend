@@ -1,13 +1,14 @@
 import 'dart:async';
 
-import 'package:ask_chuck/src/features/auth/presentation/screens/app_sign_in_screen.dart';
-import 'package:ask_chuck/src/features/chat/presentation/screens/chat_screen.dart';
-import 'package:ask_chuck/src/features/chat/presentation/screens/guest_chat_screen.dart';
-import 'package:ask_chuck/src/router/app_routes.dart';
-import 'package:ask_chuck/src/router/router_refresh_listenable.dart';
+import 'package:ask_chuck/src/features/chat/presentation/screens/app_scaffold.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+
+import 'package:ask_chuck/src/features/auth/presentation/screens/app_sign_in_screen.dart';
+import 'package:ask_chuck/src/features/chat/presentation/screens/chat_screen.dart';
+import 'package:ask_chuck/src/router/app_routes.dart';
+import 'package:ask_chuck/src/router/router_refresh_listenable.dart';
 
 GoRouter createRouter(BuildContext context) {
   return GoRouter(
@@ -26,27 +27,35 @@ GoRouter createRouter(BuildContext context) {
           ),
         ),
       ),
-      GoRoute(
-        path: AppRoute.guestChat.fullPath,
-        name: AppRoute.guestChat.name,
-        pageBuilder: (context, state) => NoTransitionPage(
-          child: Title(
-            title: AppRoute.guestChat.screenTitle,
-            color: Theme.of(context).colorScheme.primary,
-            child: const GuestChatScreen(),
-          ),
+      ShellRoute(
+        builder: (context, state, child) => AppScaffold(
+          state: state,
+          child: child,
         ),
-      ),
-      GoRoute(
-        path: AppRoute.chat.fullPath,
-        name: AppRoute.chat.name,
-        pageBuilder: (context, state) => NoTransitionPage(
-          child: Title(
-            title: AppRoute.chat.screenTitle,
-            color: Theme.of(context).colorScheme.primary,
-            child: const ChatScreen(),
+        routes: [
+          GoRoute(
+            path: AppRoute.guestChat.fullPath,
+            name: AppRoute.guestChat.name,
+            pageBuilder: (context, state) => NoTransitionPage(
+              child: Title(
+                title: AppRoute.guestChat.screenTitle,
+                color: Theme.of(context).colorScheme.primary,
+                child: const ChatScreen(),
+              ),
+            ),
           ),
-        ),
+          GoRoute(
+            path: AppRoute.chat.fullPath,
+            name: AppRoute.chat.name,
+            pageBuilder: (context, state) => NoTransitionPage(
+              child: Title(
+                title: AppRoute.chat.screenTitle,
+                color: Theme.of(context).colorScheme.primary,
+                child: const ChatScreen(),
+              ),
+            ),
+          ),
+        ],
       ),
     ],
   );

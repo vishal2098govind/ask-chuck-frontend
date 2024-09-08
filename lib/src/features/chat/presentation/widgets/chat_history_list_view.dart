@@ -26,9 +26,11 @@ class ChatHistoryListView extends StatelessWidget {
               .collection("/ask_chuck_sessions/$sessionId/conversations")
               .snapshots(),
           builder: (context, snapshot) {
-            if (!snapshot.hasData) {
+            if (!snapshot.hasData ||
+                snapshot.connectionState != ConnectionState.active) {
               return const Center(child: CircularProgressIndicator());
             }
+            debugPrint("${snapshot.connectionState}");
 
             final chatSession = ChatSession.fromCollectionSnapshot(
               snapshot.data,
@@ -38,32 +40,44 @@ class ChatHistoryListView extends StatelessWidget {
             if (state.currentQuery != null) {
               widgets.add(
                 Container(
-                  margin: const EdgeInsets.only(bottom: 20),
-                  child: ListTile(
-                    title: Text("${state.currentQuery}"),
-                    subtitle: Shimmer.fromColors(
-                      baseColor: Colors.grey[400]!,
-                      highlightColor: Colors.grey[100]!,
-                      child: Column(
-                        children: [
-                          Container(
-                            height: 20,
-                            margin: const EdgeInsets.only(bottom: 4, top: 4),
-                            color: Colors.white,
-                          ),
-                          Container(
-                            height: 20,
-                            margin: const EdgeInsets.only(bottom: 4, top: 4),
-                            color: Colors.white,
-                          ),
-                          Container(
-                            height: 20,
-                            margin: const EdgeInsets.only(bottom: 4, top: 4),
-                            color: Colors.white,
-                          ),
-                        ],
+                  margin: const EdgeInsets.symmetric(vertical: 16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "${state.currentQuery}",
+                        style: Theme.of(context)
+                            .primaryTextTheme
+                            .titleLarge
+                            ?.copyWith(
+                              color: Colors.white,
+                            ),
                       ),
-                    ),
+                      const SizedBox(height: 8),
+                      Shimmer.fromColors(
+                        baseColor: Colors.grey[400]!,
+                        highlightColor: Colors.grey[100]!,
+                        child: Column(
+                          children: [
+                            Container(
+                              height: 20,
+                              margin: const EdgeInsets.only(bottom: 4, top: 4),
+                              color: Colors.white,
+                            ),
+                            Container(
+                              height: 20,
+                              margin: const EdgeInsets.only(bottom: 4, top: 4),
+                              color: Colors.white,
+                            ),
+                            Container(
+                              height: 20,
+                              margin: const EdgeInsets.only(bottom: 4, top: 4),
+                              color: Colors.white,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               );
@@ -71,9 +85,26 @@ class ChatHistoryListView extends StatelessWidget {
 
             for (var chat in chatSession.conversations) {
               widgets.add(
-                ListTile(
-                  title: Text("${chat.humanMessage?.content}"),
-                  subtitle: Text("${chat.aiMessage?.content}"),
+                Container(
+                  margin: const EdgeInsets.symmetric(vertical: 16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "${chat.humanMessage?.content}",
+                        style: Theme.of(context)
+                            .primaryTextTheme
+                            .titleLarge
+                            ?.copyWith(
+                              color: Colors.white,
+                            ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        "${chat.aiMessage?.content}",
+                      ),
+                    ],
+                  ),
                 ),
               );
             }

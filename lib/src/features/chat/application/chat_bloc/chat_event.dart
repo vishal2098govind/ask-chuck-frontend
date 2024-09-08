@@ -18,9 +18,11 @@ class SetChatUserId extends ChatEvent {
 
 class Converse extends ChatEvent {
   final String query;
+  final String userId;
 
   const Converse({
     required this.query,
+    required this.userId,
   });
 }
 

@@ -1,7 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import 'package:ask_chuck/src/router/router_refresh_listenable.dart';
+import 'package:ask_chuck/src/features/chat/presentation/widgets/chat_interface.dart';
 
 class ChatScreen extends StatelessWidget {
   const ChatScreen({
@@ -11,17 +10,13 @@ class ChatScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Chat"),
-        actions: [
-          ElevatedButton(
-            onPressed: () async {
-              await FirebaseAuth.instance.signOut();
-              RouterRefreshListenable.instance.refresh();
-            },
-            child: const Text("Sign out"),
-          )
-        ],
+      body: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(
+            maxWidth: 800,
+          ),
+          child: const ChatInterface(),
+        ),
       ),
     );
   }
