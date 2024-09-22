@@ -104,10 +104,7 @@ class ChatHistoryListView extends StatelessWidget {
               final chat = chatSession.conversations[i];
 
               widgets.add(
-                ChatConversationTile.fromSessionConversation(
-                  chat: chat,
-                  stream: i == 0,
-                ),
+                ChatConversationTile.fromSessionConversation(chat: chat),
               );
             }
 
