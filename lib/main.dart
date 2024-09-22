@@ -12,7 +12,7 @@ import 'package:ask_chuck/src/theme/app_theme.dart';
 Future<void> main() async {
   setPathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load();
+  await dotenv.load(fileName: "dotenv");
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );

@@ -1,23 +1,17 @@
 import 'package:flutter/material.dart';
 
-import 'package:ask_chuck/src/features/chat/presentation/widgets/chat_interface.dart';
+import 'package:ask_chuck/src/features/chat/presentation/screens/chat_screen_desktop.dart';
+import 'package:ask_chuck/src/features/chat/presentation/screens/chat_screen_mobile.dart';
+import 'package:ask_chuck/src/responsive/responsive.dart';
 
 class ChatScreen extends StatelessWidget {
-  const ChatScreen({
-    super.key,
-  });
+  const ChatScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(
-            maxWidth: 800,
-          ),
-          child: const ChatInterface(),
-        ),
-      ),
+    return ResponsiveScreenLayout(
+      desktop: (_) => const ChatScreenDesktop(),
+      mobile: (_) => const ChatScreenMobile(),
     );
   }
 }

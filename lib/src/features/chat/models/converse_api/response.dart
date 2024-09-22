@@ -4,13 +4,17 @@ import 'package:ask_chuck/src/features/chat/models/shared/chat_history.dart';
 
 class ConverseResponse {
   final String? input;
+  final String? conversationId;
   final List<ChatHistory> chatHistory;
+  final String? answer;
   final List<ChatContext> context;
 
   const ConverseResponse({
     required this.input,
+    required this.answer,
     required this.chatHistory,
     required this.context,
+    required this.conversationId,
   });
 
   factory ConverseResponse.fromMap(Object? map) {
@@ -19,6 +23,14 @@ class ConverseResponse {
         return ConverseResponse(
           input: parseValueType<String?>(
             map["input"],
+            defaultValue: null,
+          ),
+          answer: parseValueType<String?>(
+            map["answer"],
+            defaultValue: null,
+          ),
+          conversationId: parseValueType<String?>(
+            map["conversation"],
             defaultValue: null,
           ),
           chatHistory: parseList(
@@ -33,6 +45,8 @@ class ConverseResponse {
     }
 
     return const ConverseResponse(
+      conversationId: null,
+      answer: null,
       input: null,
       chatHistory: [],
       context: [],

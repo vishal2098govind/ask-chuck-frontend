@@ -8,8 +8,12 @@ class ChatSession {
 
   const ChatSession({required this.conversations});
 
-  factory ChatSession.fromCollectionSnapshot(QuerySnapshot? snapshot) {
+  factory ChatSession.fromCollectionSnapshot(
+    QuerySnapshot? snapshot, {
+    String? currentConversationId,
+  }) {
     final conversations = snapshot?.docs
+            .where((e) => e.id != currentConversationId)
             .map((e) => SessionConversation.fromSnapshot(e))
             .toList() ??
         [];
@@ -27,11 +31,13 @@ class ChatSession {
 class SessionConversation {
   final ChatHistory? aiMessage;
   final ChatHistory? humanMessage;
+  final String conversationId;
   final List<ChatContext> context;
   final DateTime? createdAt;
   final DateTime? updatedAt;
 
   const SessionConversation({
+    required this.conversationId,
     required this.aiMessage,
     required this.humanMessage,
     required this.context,
@@ -47,6 +53,7 @@ class SessionConversation {
         final createdAt = map["created_at"];
         final updatedAt = map["updated_at"];
         return SessionConversation(
+          conversationId: doc?.id ?? "",
           aiMessage: ChatHistory.fromFirebase(map["ai_message"]),
           humanMessage: ChatHistory.fromFirebase(map["human_message"]),
           context: parseList(
@@ -68,6 +75,7 @@ class SessionConversation {
 
     return const SessionConversation(
       aiMessage: null,
+      conversationId: "",
       humanMessage: null,
       context: [],
       createdAt: null,

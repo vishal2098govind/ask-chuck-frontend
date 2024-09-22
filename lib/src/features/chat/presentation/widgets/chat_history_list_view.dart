@@ -1,3 +1,5 @@
+import 'package:ask_chuck/src/core/async_helpers/async_value.dart';
+import 'package:ask_chuck/src/features/chat/presentation/widgets/chat_conversation_tile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,6 +18,10 @@ class ChatHistoryListView extends StatelessWidget {
     return BlocBuilder<ChatBloc, ChatState>(
       builder: (context, state) {
         final sessionId = state.sessionId;
+        final currentConversation = switch (state.currentConversation) {
+          AsyncData(data: final data) => data,
+          _ => null,
+        };
 
         if (sessionId == null) {
           return const SizedBox.shrink();
@@ -26,14 +32,13 @@ class ChatHistoryListView extends StatelessWidget {
               .collection("/ask_chuck_sessions/$sessionId/conversations")
               .snapshots(),
           builder: (context, snapshot) {
-            if (!snapshot.hasData ||
-                snapshot.connectionState != ConnectionState.active) {
+            if (!snapshot.hasData) {
               return const Center(child: CircularProgressIndicator());
             }
-            debugPrint("${snapshot.connectionState}");
 
             final chatSession = ChatSession.fromCollectionSnapshot(
               snapshot.data,
+              currentConversationId: currentConversation?.conversationId,
             );
 
             List<Widget> widgets = [];
@@ -83,33 +88,28 @@ class ChatHistoryListView extends StatelessWidget {
               );
             }
 
-            for (var chat in chatSession.conversations) {
+            final conversations = chatSession.conversations.where(
+              (e) => e.conversationId != currentConversation?.conversationId,
+            );
+
+            if (currentConversation?.conversationId != null) {
               widgets.add(
-                Container(
-                  margin: const EdgeInsets.symmetric(vertical: 16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "${chat.humanMessage?.content}",
-                        style: Theme.of(context)
-                            .primaryTextTheme
-                            .titleLarge
-                            ?.copyWith(
-                              color: Colors.white,
-                            ),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        "${chat.aiMessage?.content}",
-                      ),
-                    ],
-                  ),
+                ChatConversationTile.fromConverseResponse(
+                  currentConversation: currentConversation!,
                 ),
               );
             }
 
-            // final currentConversation = state.currentConversation;
+            for (var i = 0; i < conversations.length; i++) {
+              final chat = chatSession.conversations[i];
+
+              widgets.add(
+                ChatConversationTile.fromSessionConversation(
+                  chat: chat,
+                  stream: i == 0,
+                ),
+              );
+            }
 
             return ListView.builder(
               reverse: true,

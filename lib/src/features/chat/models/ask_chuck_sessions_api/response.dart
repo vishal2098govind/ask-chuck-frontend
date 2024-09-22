@@ -1,7 +1,8 @@
 import 'package:ask_chuck/src/core/parser.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:equatable/equatable.dart';
 
-class AskChuckSessions {
+class AskChuckSessions extends Equatable {
   final List<AskChuckSession> sessions;
 
   const AskChuckSessions({
@@ -21,9 +22,12 @@ class AskChuckSessions {
       sessions: sessions,
     );
   }
+
+  @override
+  List<Object?> get props => [sessions];
 }
 
-class AskChuckSession {
+class AskChuckSession extends Equatable {
   final String? sessionName;
   final String? id;
   final DateTime? createdAt;
@@ -60,4 +64,7 @@ class AskChuckSession {
       createdAt: null,
     );
   }
+
+  @override
+  List<Object?> get props => [id, sessionName, createdAt];
 }

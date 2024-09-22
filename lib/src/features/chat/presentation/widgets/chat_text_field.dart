@@ -27,7 +27,10 @@ class _ChatTextFieldState extends State<ChatTextField> {
       controller: controller,
       onFieldSubmitted: (query) => _handleChat(context, query),
       decoration: InputDecoration(
-        hintText: "Ask anything with Chucks",
+        hintText: "Ask anything with Chuck",
+        hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              color: Colors.grey,
+            ),
         suffixIcon: IconButton(
           onPressed: () {
             _handleChat(context, controller.text);
