@@ -21,73 +21,101 @@ class SourcesListView extends StatelessWidget {
       child: ExpansionTile(
         title: const ListTile(title: Text("Sources:")),
         children: [
-          SizedBox(
-            height: 100,
-            child: ListView.builder(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              scrollDirection: Axis.horizontal,
-              itemCount: contextGroups.length,
-              itemBuilder: (context, index) {
-                final groupItem = contextGroups[index].value;
-                final metaData = groupItem.isEmpty
-                    ? null
-                    : contextGroups[index].value.first.metaData;
-                final pageContent =
-                    groupItem.isEmpty ? null : groupItem.first.pageContent;
-
-                if (metaData == null) return const SizedBox.shrink();
-
-                final title = metaData.title;
-                final (source, page) = (metaData.source, metaData.page);
-
-                return InkWell(
-                  onTap: () async {
-                    final uri = Uri.parse(
-                      "$source${page != null ? "#page=$page" : ""}#search=${Uri.encodeFull(pageContent ?? "")}",
-                    );
-                    launchUrl(uri);
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: Colors.white.withOpacity(0.4),
-                    ),
-                    margin: const EdgeInsets.symmetric(horizontal: 4.0),
-                    padding: const EdgeInsets.all(8.0),
-                    width: 200,
-                    alignment: Alignment.bottomCenter,
-                    child: Column(
+          Row(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: IntrinsicHeight(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Expanded(
-                          child: Text(
-                            "$title",
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 3,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium
-                                ?.copyWith(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
+                        ...contextGroups.map((ctg) {
+                          final groupItem = ctg.value.toSet();
+                          final metaData = groupItem.isEmpty
+                              ? null
+                              : ctg.value.first.metaData;
+                          if (metaData == null) return const SizedBox.shrink();
+
+                          final title = metaData.title;
+                          return Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              color: Colors.white.withOpacity(0.4),
+                            ),
+                            margin: const EdgeInsets.symmetric(horizontal: 4.0),
+                            padding: const EdgeInsets.all(8.0),
+                            width: 240,
+                            alignment: Alignment.bottomCenter,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "$title",
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 3,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium
+                                          ?.copyWith(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                    ),
+                                  ],
                                 ),
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        Text(
-                          "$source",
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                          style:
-                              Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                    color: Colors.grey,
-                                  ),
-                        ),
+                                const SizedBox(height: 20),
+                                ...groupItem.map(
+                                  (ctx) {
+                                    final (source, page) = (
+                                      ctx.metaData?.source,
+                                      ctx.metaData?.page
+                                    );
+                                    return Column(
+                                      children: [
+                                        InkWell(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                          hoverColor: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
+                                          onTap: () {
+                                            final uri = Uri.parse(
+                                              "$source${page != null ? "#page=$page" : ""}#search=${Uri.encodeFull(ctx.pageContent ?? "")}",
+                                            );
+                                            launchUrl(uri);
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(4),
+                                            child: Text(
+                                              "Page #$page, ${ctx.pageContent}...",
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 5,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium
+                                                  ?.copyWith(fontSize: 12),
+                                            ),
+                                          ),
+                                        ),
+                                        const Divider(),
+                                      ],
+                                    );
+                                  },
+                                ),
+                              ],
+                            ),
+                          );
+                        }),
                       ],
                     ),
                   ),
-                );
-              },
-            ),
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 20),
         ],

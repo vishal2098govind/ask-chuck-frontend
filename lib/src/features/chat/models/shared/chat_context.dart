@@ -45,7 +45,7 @@ extension ListChatContextX on List<ChatContext> {
         groups = {
           ...groups,
           source: [
-            ...(groups[ctx.metaData?.title] ?? []),
+            ...(groups[source] ?? []),
             ctx,
           ],
         };

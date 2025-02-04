@@ -46,7 +46,7 @@ class ChatContextMetaData extends Equatable {
   }
 
   @override
-  List<Object?> get props => [source];
+  List<Object?> get props => [source, page];
 }
 
 // {
