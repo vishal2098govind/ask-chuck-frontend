@@ -1,6 +1,7 @@
 import 'package:ask_chuck/src/core/parser.dart';
+import 'package:equatable/equatable.dart';
 
-class ChatContextMetaData {
+class ChatContextMetaData extends Equatable {
   final String? contentType;
   final num? page;
   final String? source;
@@ -43,6 +44,9 @@ class ChatContextMetaData {
       title: null,
     );
   }
+
+  @override
+  List<Object?> get props => [source];
 }
 
 // {

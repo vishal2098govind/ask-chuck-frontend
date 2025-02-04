@@ -12,6 +12,8 @@ class SourcesListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final contextGroups = chatContext.groupBySource().entries.toList();
+
     return Theme(
       data: Theme.of(context).copyWith(
         dividerColor: Colors.transparent,
@@ -24,10 +26,15 @@ class SourcesListView extends StatelessWidget {
             child: ListView.builder(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               scrollDirection: Axis.horizontal,
-              itemCount: chatContext.length,
+              itemCount: contextGroups.length,
               itemBuilder: (context, index) {
-                final metaData = chatContext[index].metaData;
-                final pageContent = chatContext[index].pageContent;
+                final groupItem = contextGroups[index].value;
+                final metaData = groupItem.isEmpty
+                    ? null
+                    : contextGroups[index].value.first.metaData;
+                final pageContent =
+                    groupItem.isEmpty ? null : groupItem.first.pageContent;
+
                 if (metaData == null) return const SizedBox.shrink();
 
                 final title = metaData.title;
