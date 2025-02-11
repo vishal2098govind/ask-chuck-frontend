@@ -47,6 +47,7 @@ class ChatConversationTile extends StatelessWidget {
                 ),
           ),
           const SizedBox(height: 8),
+          SourcesListView(chatContext: chatContext),
           if (!stream)
             Markdown(
               shrinkWrap: true,
@@ -67,7 +68,6 @@ class ChatConversationTile extends StatelessWidget {
                 );
               },
             ),
-          SourcesListView(chatContext: chatContext)
         ],
       ),
     );

@@ -54,6 +54,7 @@ dependencies:
   url_launcher: ^6.3.0
   js: ^0.6.3
   package_info_plus: ^8.0.2
+  animated_text_kit: ^4.2.3
 
 dev_dependencies:
   flutter_test:

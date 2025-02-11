@@ -19,6 +19,8 @@ class SourcesListView extends StatelessWidget {
         dividerColor: Colors.transparent,
       ),
       child: ExpansionTile(
+        initiallyExpanded: true,
+        tilePadding: EdgeInsets.zero,
         title: const ListTile(title: Text("Sources:")),
         children: [
           Row(
