@@ -17,11 +17,14 @@ class StreamingMessageBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedTextKit(
       isRepeatingAnimation: false,
+      onFinished: () {
+        onStreamingComplete?.call();
+      },
       repeatForever: false,
       animatedTexts: [
         TypewriterAnimatedText(
           words,
-          speed: const Duration(milliseconds: 20),
+          speed: const Duration(milliseconds: 10),
         )
       ],
     );
