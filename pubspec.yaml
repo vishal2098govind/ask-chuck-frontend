@@ -55,6 +55,8 @@ dependencies:
   js: ^0.6.3
   package_info_plus: ^8.0.2
   animated_text_kit: ^4.2.3
+  side_sheet: ^1.0.4
+  markdown_editor_plus: ^0.2.15
 
 dev_dependencies:
   flutter_test:

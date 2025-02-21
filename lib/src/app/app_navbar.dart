@@ -1,3 +1,4 @@
+import 'package:ask_chuck/src/app/settings_icon_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -45,6 +46,18 @@ class AppNavbar extends StatelessWidget {
                             "Ask Chuck",
                             style: Theme.of(context).textTheme.headlineLarge,
                           ),
+                          contentPadding: state.currentUser?.email ==
+                                      "anurag@infinative.com" ||
+                                  state.currentUser?.email ==
+                                      "vishal.govind@infinative.com"
+                              ? EdgeInsets.zero
+                              : null,
+                          trailing: state.currentUser?.email ==
+                                      "anurag@infinative.com" ||
+                                  state.currentUser?.email ==
+                                      "vishal.govind@infinative.com"
+                              ? const SettingsIconButton()
+                              : null,
                         ),
                       ),
                       const SliverToBoxAdapter(child: SizedBox(height: 20)),

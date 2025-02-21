@@ -102,33 +102,13 @@ class _ChatConversationTileState extends State<ChatConversationTile> {
           ),
           const SizedBox(height: 8),
           SourcesListView(chatContext: widget.chatContext),
-          if (!stream)
-            Markdown(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              data: aiMessage,
-              styleSheetTheme: MarkdownStyleSheetBaseTheme.material,
-              onTapLink: onTapLink,
-            )
-          else
-            StreamingMessageBuilder(
-              onStreamingComplete: () {
-                setState(() {
-                  stream = false;
-                });
-              },
-              key: ValueKey(widget.conversationId),
-              words: aiMessage,
-              messageBuilder: (context, message) {
-                return Markdown(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  data: message,
-                  styleSheetTheme: MarkdownStyleSheetBaseTheme.material,
-                  onTapLink: onTapLink,
-                );
-              },
-            ),
+          Markdown(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            data: aiMessage,
+            styleSheetTheme: MarkdownStyleSheetBaseTheme.material,
+            onTapLink: onTapLink,
+          )
         ],
       ),
     );
