@@ -1,12 +1,11 @@
-import 'package:ask_chuck/src/features/chat/models/converse_api/response.dart';
-import 'package:ask_chuck/src/features/chat/models/shared/chat_context.dart';
-import 'package:ask_chuck/src/utils/streaming_message_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-
-import 'package:ask_chuck/src/features/chat/models/session_conversation_api/response.dart';
-import 'package:ask_chuck/src/features/chat/presentation/widgets/sources_list_view.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import 'package:ask_chuck/src/features/chat/models/converse_api/response.dart';
+import 'package:ask_chuck/src/features/chat/models/session_conversation_api/response.dart';
+import 'package:ask_chuck/src/features/chat/models/shared/chat_context.dart';
+import 'package:ask_chuck/src/features/chat/presentation/widgets/sources_list_view.dart';
 
 class ChatConversationTile extends StatefulWidget {
   ChatConversationTile.fromSessionConversation({

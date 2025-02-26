@@ -1,4 +1,5 @@
 import 'package:ask_chuck/src/features/chat/models/shared/chat_context.dart';
+import 'package:ask_chuck/src/features/chat/presentation/widgets/image_source_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -72,10 +73,15 @@ class SourcesListView extends StatelessWidget {
                                 const SizedBox(height: 20),
                                 ...groupItem.map(
                                   (ctx) {
-                                    final (source, page) = (
+                                    final (source, page, imageId) = (
                                       ctx.metaData?.source,
-                                      ctx.metaData?.page
+                                      ctx.metaData?.page,
+                                      ctx.metaData?.imageId
                                     );
+                                    if (imageId != null) {
+                                      return ImageSourceTile(ctx: ctx);
+                                    }
+
                                     return Column(
                                       children: [
                                         InkWell(

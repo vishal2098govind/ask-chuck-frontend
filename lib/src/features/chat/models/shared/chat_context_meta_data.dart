@@ -6,12 +6,16 @@ class ChatContextMetaData extends Equatable {
   final num? page;
   final String? source;
   final String? title;
+  final String? type;
+  final String? imageId;
 
   const ChatContextMetaData({
     required this.contentType,
     required this.page,
     required this.source,
     required this.title,
+    required this.type,
+    required this.imageId,
   });
 
   factory ChatContextMetaData.fromMap(Object? map) {
@@ -20,6 +24,14 @@ class ChatContextMetaData extends Equatable {
         return ChatContextMetaData(
           contentType: parseValueType<String?>(
             map["content-type"],
+            defaultValue: null,
+          ),
+          imageId: parseValueType<String?>(
+            map["image_id"],
+            defaultValue: null,
+          ),
+          type: parseValueType<String?>(
+            map["type"],
             defaultValue: null,
           ),
           page: parseValueType<num?>(
@@ -42,6 +54,8 @@ class ChatContextMetaData extends Equatable {
       page: null,
       source: null,
       title: null,
+      imageId: null,
+      type: null,
     );
   }
 
