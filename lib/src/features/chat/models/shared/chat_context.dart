@@ -35,3 +35,29 @@ class ChatContext {
     );
   }
 }
+
+extension ListChatContextX on List<ChatContext> {
+  Map<String, List<ChatContext>> groupBySource() {
+    var groups = <String, List<ChatContext>>{};
+    for (var ctx in this) {
+      final source = ctx.metaData?.source;
+      var imageId = ctx.metaData?.imageId;
+      if (ctx.metaData?.type == "image" && imageId != null) {
+        groups = {
+          ...groups,
+          imageId: [ctx],
+        };
+      } else if (source != null) {
+        groups = {
+          ...groups,
+          source: [
+            ...(groups[source] ?? []),
+            ctx,
+          ],
+        };
+      }
+    }
+
+    return groups;
+  }
+}

@@ -1,16 +1,21 @@
 import 'package:ask_chuck/src/core/parser.dart';
+import 'package:equatable/equatable.dart';
 
-class ChatContextMetaData {
+class ChatContextMetaData extends Equatable {
   final String? contentType;
   final num? page;
   final String? source;
   final String? title;
+  final String? type;
+  final String? imageId;
 
   const ChatContextMetaData({
     required this.contentType,
     required this.page,
     required this.source,
     required this.title,
+    required this.type,
+    required this.imageId,
   });
 
   factory ChatContextMetaData.fromMap(Object? map) {
@@ -19,6 +24,14 @@ class ChatContextMetaData {
         return ChatContextMetaData(
           contentType: parseValueType<String?>(
             map["content-type"],
+            defaultValue: null,
+          ),
+          imageId: parseValueType<String?>(
+            map["image_id"],
+            defaultValue: null,
+          ),
+          type: parseValueType<String?>(
+            map["type"],
             defaultValue: null,
           ),
           page: parseValueType<num?>(
@@ -41,8 +54,13 @@ class ChatContextMetaData {
       page: null,
       source: null,
       title: null,
+      imageId: null,
+      type: null,
     );
   }
+
+  @override
+  List<Object?> get props => [source, page];
 }
 
 // {

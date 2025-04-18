@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:ask_chuck/src/features/chat/models/prompt/prompt.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -20,6 +21,8 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   late final StreamSubscription<User?> currentUserStreamSubscription;
   StreamSubscription<QuerySnapshot<Map<String, dynamic>>>?
       _askChuckSessionsStreamSubscription;
+  StreamSubscription<DocumentSnapshot<Map<String, dynamic>>>?
+      _promptStreamSubscription;
 
   ChatBloc() : super(const ChatState()) {
     currentUserStreamSubscription =
@@ -27,6 +30,10 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       add(const SetChatSessionId(sessionId: null));
       add(SetChatUserId(userId: user?.uid));
     });
+    _promptStreamSubscription = FirebaseFirestore.instance
+        .doc("global_settings/prompt_settings")
+        .snapshots()
+        .listen(_handleGlobalPromptChange);
 
     on<ChatEvent>(
       (event, emit) {
@@ -150,7 +157,20 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   @override
   Future<void> close() async {
     await _askChuckSessionsStreamSubscription?.cancel();
+    await _promptStreamSubscription?.cancel();
     await currentUserStreamSubscription.cancel();
     return super.close();
+  }
+
+  void _handleGlobalPromptChange(
+    DocumentSnapshot<Map<String, dynamic>> event,
+  ) {
+    add(
+      SetChatState(
+        newState: state.copyWith(
+          globalPrompt: () => Prompt.fromSnapshot(event),
+        ),
+      ),
+    );
   }
 }

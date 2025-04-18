@@ -16,7 +16,8 @@ class AsyncRequest extends Equatable {
     this.headers,
     this.validStatuses,
     String? baseUrl,
-  }) : baseUrl = baseUrl ?? "https://ask-chuck-api-rj3nriizfq-uc.a.run.app";
+  }) : baseUrl =
+            baseUrl ?? "https://askchucks-725776442176.us-central1.run.app";
 
   Future<String> get requestUrl async => "$baseUrl${(await prepareEndpoint())}";
 
