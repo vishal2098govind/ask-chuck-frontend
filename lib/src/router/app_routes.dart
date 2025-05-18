@@ -13,6 +13,11 @@ enum AppRoute {
     fullPath: "/signin",
     relativePath: "signin",
     screenTitle: "Sign In",
+  ),
+  interactRoom(
+    fullPath: "/interact-room",
+    relativePath: "interact-room",
+    screenTitle: "Interact",
   );
 
   final String fullPath;

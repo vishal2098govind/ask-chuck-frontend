@@ -1,9 +1,11 @@
 import 'dart:async';
 
 import 'package:ask_chuck/src/features/chat/models/prompt/prompt.dart';
+import 'package:ask_chuck/src/features/interactive_avatar/presentation/screens/heygen_room.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uuid/uuid.dart';
 
@@ -24,7 +26,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   StreamSubscription<DocumentSnapshot<Map<String, dynamic>>>?
       _promptStreamSubscription;
 
-  ChatBloc() : super(const ChatState()) {
+  ChatBloc() : super(ChatState(heyGenKey: GlobalKey())) {
     currentUserStreamSubscription =
         FirebaseAuth.instance.authStateChanges().listen((user) {
       add(const SetChatSessionId(sessionId: null));
@@ -131,6 +133,8 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
             ),
           ),
         );
+        event.handleAnswer?.call(result.response.answer ?? "");
+        state.heyGenKey.currentState?.sendTask(result.response.answer ?? "");
         break;
       case AsyncFailureResponse():
         add(

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:ask_chuck/src/features/chat/presentation/screens/app_scaffold.dart';
+import 'package:ask_chuck/src/features/interactive_avatar/presentation/screens/heygen_room.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -24,6 +25,17 @@ GoRouter createRouter(BuildContext context) {
             title: AppRoute.signin.screenTitle,
             color: Theme.of(context).colorScheme.primary,
             child: const AppSignInScreen(),
+          ),
+        ),
+      ),
+      GoRoute(
+        path: AppRoute.interactRoom.fullPath,
+        name: AppRoute.interactRoom.name,
+        pageBuilder: (context, state) => NoTransitionPage(
+          child: Title(
+            title: AppRoute.interactRoom.screenTitle,
+            color: Theme.of(context).colorScheme.primary,
+            child: const HeygenRoom(),
           ),
         ),
       ),
@@ -69,6 +81,7 @@ FutureOr<String?> _handleRedirect(
 
   bool isRoutingToAuthenticatedRoute =
       state.matchedLocation != AppRoute.guestChat.fullPath &&
+          state.matchedLocation != AppRoute.interactRoom.fullPath &&
           state.matchedLocation != AppRoute.signin.fullPath;
 
   if (isSignedIn) {

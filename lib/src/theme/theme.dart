@@ -1,4 +1,3 @@
-import "package:ask_chuck/src/theme/util.dart";
 import "package:flutter/material.dart";
 
 class MaterialTheme {
@@ -7,12 +6,7 @@ class MaterialTheme {
   MaterialTheme({
     TextTheme? textTheme,
     required BuildContext context,
-  }) : textTheme = textTheme ??
-            createTextTheme(
-              context,
-              "Inter",
-              "Inter",
-            );
+  }) : textTheme = textTheme ?? const TextTheme();
 
   static ColorScheme lightScheme() {
     return const ColorScheme(

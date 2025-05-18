@@ -7,8 +7,10 @@ class ChatState extends Equatable {
   final String? currentQuery;
   final String? sessionId;
   final String? userId;
+  final GlobalKey<HeygenRoomState> heyGenKey;
 
   const ChatState({
+    required this.heyGenKey,
     this.globalPrompt,
     this.currentConversation = const AsyncNull(),
     // this.sessionId = "test_pinecone_session_2",
@@ -37,6 +39,7 @@ class ChatState extends Equatable {
     String? Function()? userId,
   }) {
     return ChatState(
+      heyGenKey: heyGenKey,
       askChuckSessions: askChuckSessions ?? this.askChuckSessions,
       currentConversation: currentConversation ?? this.currentConversation,
       currentQuery: currentQuery != null ? currentQuery() : this.currentQuery,
