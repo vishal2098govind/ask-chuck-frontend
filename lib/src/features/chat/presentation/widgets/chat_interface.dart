@@ -16,7 +16,9 @@ class ChatInterface extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: state.sessionId == null
+                ? MainAxisAlignment.center
+                : MainAxisAlignment.end,
             children: [
               ResponsiveScreenLayout(
                 desktop: (context) {
@@ -28,19 +30,12 @@ class ChatInterface extends StatelessWidget {
                 const Expanded(child: ChatHistoryListView()),
               const SizedBox(height: 8),
               const ChatTextField(),
-              const SizedBox(height: 8),
-              Text(
-                "Ask Chuck may display inaccurate info, including about people, so double-check its responses.",
-                style: Theme.of(context)
-                    .primaryTextTheme
-                    .bodySmall
-                    ?.copyWith(color: Colors.grey),
-              ),
               ResponsiveScreenLayout(
                 desktop: (context) {
-                  return const SizedBox(height: 80);
+                  return SizedBox(height: state.sessionId == null ? 80 : 20);
                 },
-                mobile: (p0) => const SizedBox(height: 10),
+                mobile: (p0) =>
+                    SizedBox(height: state.sessionId == null ? 10 : 10),
               ),
             ],
           ),

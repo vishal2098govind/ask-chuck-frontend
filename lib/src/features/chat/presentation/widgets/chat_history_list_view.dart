@@ -49,14 +49,18 @@ class ChatHistoryListView extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        "${state.currentQuery}",
-                        style: Theme.of(context)
-                            .primaryTextTheme
-                            .titleLarge
-                            ?.copyWith(
-                              color: Colors.white,
-                            ),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: Text(
+                          "${state.currentQuery}",
+                          textAlign: TextAlign.right,
+                          style: Theme.of(context)
+                              .primaryTextTheme
+                              .titleLarge
+                              ?.copyWith(
+                                color: Colors.white,
+                              ),
+                        ),
                       ),
                       const SizedBox(height: 8),
                       Shimmer.fromColors(

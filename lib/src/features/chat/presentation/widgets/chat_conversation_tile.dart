@@ -131,22 +131,70 @@ class _ChatConversationTileState extends State<ChatConversationTile> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            widget.humanMessage,
-            style: Theme.of(context).primaryTextTheme.titleLarge?.copyWith(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
+          Align(
+            alignment: Alignment.centerRight,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFD2DEF9),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Text(
+                          widget.humanMessage,
+                          style: Theme.of(context)
+                              .primaryTextTheme
+                              .titleLarge
+                              ?.copyWith(
+                                color: const Color(0xFF6F6F6F),
+                                fontWeight: FontWeight.w500,
+                              ),
+                          textAlign: TextAlign.right,
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      bottom: -10,
+                      right: 12,
+                      child: CustomPaint(
+                        painter: ChatBubbleTailPainter(
+                          color: const Color(0xFFD9E6FC),
+                        ),
+                        size: const Size(12, 12),
+                      ),
+                    ),
+                  ],
                 ),
+              ],
+            ),
           ),
           const SizedBox(height: 8),
-          SourcesListView(chatContext: widget.chatContext),
-          Markdown(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            data: aiMessage,
-            styleSheetTheme: MarkdownStyleSheetBaseTheme.material,
-            onTapLink: onTapLink,
-          )
+          Row(
+            children: [
+              Expanded(
+                child: Markdown(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  data: aiMessage,
+                  styleSheetTheme: MarkdownStyleSheetBaseTheme.material,
+                  onTapLink: onTapLink,
+                ),
+              ),
+              const SizedBox(width: 150),
+            ],
+          ),
+          Row(
+            children: [
+              Expanded(child: SourcesListView(chatContext: widget.chatContext)),
+              const SizedBox(width: 150),
+            ],
+          ),
         ],
       ),
     );
@@ -164,4 +212,27 @@ class _ChatConversationTileState extends State<ChatConversationTile> {
       }
     }
   }
+}
+
+class ChatBubbleTailPainter extends CustomPainter {
+  final Color color;
+
+  ChatBubbleTailPainter({required this.color});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()..color = color;
+    final path = Path();
+
+    // Draw a downward pointing triangle
+    path.moveTo(0, 0);
+    path.lineTo((size.width / 2) + 8, size.height);
+    path.lineTo(size.width, 0);
+    path.close();
+
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }

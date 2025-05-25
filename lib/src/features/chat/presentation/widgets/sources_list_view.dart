@@ -22,7 +22,16 @@ class SourcesListView extends StatelessWidget {
       child: ExpansionTile(
         initiallyExpanded: true,
         tilePadding: EdgeInsets.zero,
-        title: const ListTile(title: Text("Sources:")),
+        textColor: Colors.white,
+        title: const Row(
+          children: [
+            SizedBox(width: 8),
+            Text("Sources:"),
+          ],
+        ),
+        iconColor: Colors.white,
+        collapsedIconColor: Colors.white,
+        childrenPadding: EdgeInsets.zero,
         children: [
           Row(
             children: [

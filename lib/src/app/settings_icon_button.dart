@@ -13,7 +13,7 @@ class SettingsIconButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        SideSheet.left(
+        SideSheet.right(
           width: MediaQuery.of(context).size.width * 0.4,
           context: context,
           sheetColor: Theme.of(context).scaffoldBackgroundColor,

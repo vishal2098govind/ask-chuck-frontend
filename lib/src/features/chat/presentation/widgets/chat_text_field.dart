@@ -23,21 +23,67 @@ class _ChatTextFieldState extends State<ChatTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: controller,
-      onFieldSubmitted: (query) => _handleChat(context, query),
-      decoration: InputDecoration(
-        hintText: "Ask anything with Chuck",
-        hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: Colors.grey,
+    return BlocBuilder<ChatBloc, ChatState>(
+      builder: (context, state) {
+        return DecoratedBox(
+          decoration: BoxDecoration(
+            borderRadius: state.sessionId != null
+                ? const BorderRadius.all(Radius.circular(10))
+                : BorderRadius.circular(8),
+            gradient: state.sessionId != null
+                ? null
+                : const LinearGradient(
+                    colors: [
+                      Color(0xFFFF76FF),
+                      Color(0xFFFFE100),
+                      Color(0xFF00FFA6),
+                      Color(0xFF4068E1),
+                      Color(0xFFFFE100),
+                    ],
+                  ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(2.0),
+            child: TextFormField(
+              controller: controller,
+              onFieldSubmitted: (query) => _handleChat(context, query),
+              style: const TextStyle(
+                color: Colors.black,
+              ),
+              decoration: InputDecoration(
+                fillColor: Colors.white,
+                filled: true,
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: state.sessionId != null
+                      ? const BorderRadius.all(Radius.circular(10))
+                      : BorderRadius.circular(8),
+                  borderSide: const BorderSide(width: 0),
+                ),
+                contentPadding: const EdgeInsets.only(left: 24),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(width: 0),
+                  borderRadius: state.sessionId != null
+                      ? const BorderRadius.all(Radius.circular(10))
+                      : BorderRadius.circular(8),
+                ),
+                hintText: "Ask anything with Chuck",
+                suffixIcon: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(50),
+                    child: Image.asset(
+                      "assets/icons/chat_person.png",
+                      fit: BoxFit.cover,
+                      height: 50,
+                      width: 50,
+                    ),
+                  ),
+                ),
+              ),
             ),
-        suffixIcon: IconButton(
-          onPressed: () {
-            _handleChat(context, controller.text);
-          },
-          icon: const Icon(Icons.send),
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 

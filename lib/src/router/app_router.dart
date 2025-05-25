@@ -24,7 +24,7 @@ GoRouter createRouter(BuildContext context) {
           child: Title(
             title: AppRoute.signin.screenTitle,
             color: Theme.of(context).colorScheme.primary,
-            child: const AppSignInScreen(),
+            child: const AppSignInButton(),
           ),
         ),
       ),
