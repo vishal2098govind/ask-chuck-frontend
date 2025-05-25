@@ -73,16 +73,17 @@ class _AppNavbarState extends State<AppNavbar> {
                                     ),
                                   ),
                                 )
-                              : ListTile(
-                                  contentPadding: EdgeInsets.zero,
-                                  title: const Text("New chat"),
-                                  leading: IconButton(
-                                    onPressed: () {
+                              : Material(
+                                  type: MaterialType.transparency,
+                                  child: ListTile(
+                                    hoverColor: Colors.white54,
+                                    title: const Text("New chat"),
+                                    onTap: () {
                                       BlocProvider.of<ChatBloc>(context).add(
                                           const SetChatSessionId(
                                               sessionId: null));
                                     },
-                                    icon: const DecoratedBox(
+                                    leading: const DecoratedBox(
                                       decoration: BoxDecoration(
                                         shape: BoxShape.circle,
                                         color: Color(0xFFCA91FF),

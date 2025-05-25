@@ -31,7 +31,9 @@ class AppTheme {
     return base.copyWith(
       textTheme: textTheme,
       primaryTextTheme: textTheme,
-      listTileTheme: const ListTileThemeData(),
+      listTileTheme: ListTileThemeData(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      ),
       appBarTheme: AppBarTheme(
         titleTextStyle: textTheme.titleLarge?.copyWith(
           color: colorScheme.primary,
