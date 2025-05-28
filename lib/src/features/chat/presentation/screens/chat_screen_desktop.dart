@@ -12,9 +12,14 @@ class ChatScreenDesktop extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          Image.asset(
-            "assets/icons/gradient.png",
-            fit: BoxFit.fitWidth,
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: Image.asset(
+              "assets/icons/gradient.png",
+              fit: BoxFit.fitWidth,
+            ),
           ),
           Column(
             children: [
