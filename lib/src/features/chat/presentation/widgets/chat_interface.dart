@@ -22,7 +22,7 @@ class ChatInterface extends StatelessWidget {
             children: [
               ResponsiveScreenLayout(
                 desktop: (context) {
-                  return const SizedBox(height: 100);
+                  return const SizedBox(height: 10);
                 },
                 mobile: (p0) => const SizedBox.shrink(),
               ),

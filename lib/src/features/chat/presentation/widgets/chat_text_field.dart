@@ -66,18 +66,9 @@ class _ChatTextFieldState extends State<ChatTextField> {
                       ? const BorderRadius.all(Radius.circular(10))
                       : BorderRadius.circular(8),
                 ),
-                hintText: "Ask anything with Chuck",
-                suffixIcon: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(50),
-                    child: Image.asset(
-                      "assets/icons/chat_person.png",
-                      fit: BoxFit.cover,
-                      height: 50,
-                      width: 50,
-                    ),
-                  ),
+                hintText: "Ask anything about Chuck Owen’s Work",
+                hintStyle: const TextStyle(
+                  letterSpacing: 0.1,
                 ),
               ),
             ),
