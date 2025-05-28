@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
   static TextTheme buildQuestrialTextTheme(TextTheme base) {
-    return GoogleFonts.questrialTextTheme(base).copyWith();
+    return GoogleFonts.robotoTextTheme(base).copyWith();
   }
 
   static ThemeData buildAppTheme({

@@ -70,6 +70,12 @@ class _ChatTextFieldState extends State<ChatTextField> {
                 hintStyle: const TextStyle(
                   letterSpacing: 0.1,
                 ),
+                suffixIcon: IconButton(
+                  onPressed: () => _handleChat(context, controller.text),
+                  icon: const Icon(
+                    Icons.send,
+                  ),
+                ),
               ),
             ),
           ),
